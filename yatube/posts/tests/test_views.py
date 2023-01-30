@@ -54,6 +54,7 @@ class PostsViewsTests(TestCase):
         shutil.rmtree(const.TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def setUp(self):
+        cache.clear()
         self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
@@ -77,7 +78,9 @@ class PostsViewsTests(TestCase):
             self.GROUP_LIST: const.TEMPLATE_GROUP_LIST,
             const.URL_PROFILE_REV: const.TEMPLATE_PROFILE_REV,
             self.POST_DETAIL: const.TEMPLATE_POST_DETAIL,
-            self.POST_EDIT: const.TEMPLATE_POST_EDIT
+            self.POST_EDIT: const.TEMPLATE_POST_EDIT,
+            const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
+            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404
 
         }
         for reverse_name, template in templates_pages_names.items():
