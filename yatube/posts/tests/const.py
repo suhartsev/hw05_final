@@ -45,6 +45,7 @@ TEMPLATE_POST_EDIT = 'posts/create_post.html'
 TEMPLATE_CORE_404 = 'core/404.html'
 
 URL_INDEX_HOME = '/'
+URL_ADD_COMMENT = 'posts:add_comment'
 URL_GIF = 'posts/small.gif'
 URL_INDEX = 'posts:index'
 URL_PROFILE = 'posts:profile'

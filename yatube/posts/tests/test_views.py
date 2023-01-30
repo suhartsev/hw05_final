@@ -54,10 +54,10 @@ class PostsViewsTests(TestCase):
         shutil.rmtree(const.TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def setUp(self):
-        cache.clear()
         self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+        cache.clear()
 
     def check_contex(self, context_page):
         """Проверки: контекста картинки, текста, поста, автора"""

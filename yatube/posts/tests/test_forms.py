@@ -9,7 +9,7 @@ from django.urls import reverse
 from django import forms
 
 from posts.forms import PostForm
-from posts.models import Group, Post, User
+from posts.models import Group, Post, User, Comment
 from posts.tests import const
 
 
@@ -19,6 +19,7 @@ class PostCreateFormTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.form = PostForm()
+        cls.guest_client = Client()
         cls.user = User.objects.create_user(username=const.USERNAME)
         cls.group = Group.objects.create(
             title=const.GROUP1_TITLE,
@@ -40,6 +41,9 @@ class PostCreateFormTest(TestCase):
             const.URL_POST_EDIT,
             kwargs={'post_id': cls.post.pk}
         )
+        cls.ADD_COMMENT = reverse(
+            const.URL_ADD_COMMENT,
+            kwargs={'post_id': cls.post.pk})
 
     @classmethod
     def tearDownClass(cls):
@@ -94,6 +98,53 @@ class PostCreateFormTest(TestCase):
         self.assertEqual(post.text, form_data['text'])
         self.assertEqual(post.group.id, form_data['group'])
         self.assertEqual(post.author, self.user)
+
+    def test_comment_form_non_auth(self):
+        """Проверка: Создаётся ли новая запись в базе создавая комментарий
+        авторизованным пользователем и соответстувует ли контекст"""
+        comments_count = Comment.objects.count()
+        form_data = {
+            'text': const.TEXT,
+        }
+        Comment.objects.create(
+            author=self.user,
+            text=const.TEXT,
+            post=self.post,
+        )
+        response = self.authorized_client.post(
+            self.ADD_COMMENT,
+            data=form_data,
+            follow=True,
+        )
+        self.assertEqual(Post.objects.count(), comments_count + 1)
+
+        self.assertTrue(
+            Comment.objects.filter(
+                text=const.TEXT,
+            ).exists()
+        )
+        added_comment = response.context['comments'][0]
+        self.assertEqual(added_comment.post, self.post)
+        self.assertEqual(added_comment.author, self.user)
+        self.assertEqual(added_comment.text, form_data['text'])
+
+    def test_guest_create_comment(self):
+        """Проверка: Гости не могут комментировать посты."""
+        comments_count = Comment.objects.count()
+        form_data = {
+            'text': const.TEXT,
+        }
+        self.guest_client.post(
+            self.ADD_COMMENT,
+            data=form_data,
+            follow=True
+        )
+        self.assertEqual(Comment.objects.count(), comments_count)
+        self.assertFalse(
+            Comment.objects.filter(
+                text=const.TEXT,
+            ).exists()
+        )
 
     def test_post_create_page_show_correct_context(self):
         """Проверка: Форма создания поста - post_create."""
