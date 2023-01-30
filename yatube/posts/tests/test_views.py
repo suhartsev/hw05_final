@@ -77,8 +77,7 @@ class PostsViewsTests(TestCase):
             self.GROUP_LIST: const.TEMPLATE_GROUP_LIST,
             const.URL_PROFILE_REV: const.TEMPLATE_PROFILE_REV,
             self.POST_DETAIL: const.TEMPLATE_POST_DETAIL,
-            self.POST_EDIT: const.TEMPLATE_POST_EDIT,
-            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404
+            self.POST_EDIT: const.TEMPLATE_POST_EDIT
 
         }
         for reverse_name, template in templates_pages_names.items():
