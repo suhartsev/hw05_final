@@ -78,7 +78,6 @@ class PostsViewsTests(TestCase):
             const.URL_PROFILE_REV: const.TEMPLATE_PROFILE_REV,
             self.POST_DETAIL: const.TEMPLATE_POST_DETAIL,
             self.POST_EDIT: const.TEMPLATE_POST_EDIT,
-            const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
             const.URL_UNEXISTRING: const.TEMPLATE_CORE_404
 
         }
