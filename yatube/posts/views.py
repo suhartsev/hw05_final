@@ -34,10 +34,16 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = author.posts.all()
     page_obj = paginator_obj(request, post_list)
-    following = (
-        request.user.is_authenticated
-        and Follow.objects.filter(user=request.user, author=author)
-    )
+    if request.user != author:
+        following = (
+            request.user.is_authenticated
+            and Follow.objects.filter(
+                user=request.user,
+                author=author
+            )
+        )
+    else:
+        following = False
     return render(
         request,
         'posts/profile.html', {
@@ -80,6 +86,7 @@ def post_create(request):
     )
 
 
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if post.author != request.user:
@@ -142,5 +149,7 @@ def profile_follow(request, username):
 def profile_unfollow(request, username):
     author = get_object_or_404(User, username=username)
     Follow.objects.filter(
-        user=request.user, author=author).delete()
+        user=request.user,
+        author=author
+    ).delete()
     return redirect('posts:profile', username=author)

@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 
-User = get_user_model()
-
 MAX_LENGTH_TEXT = 200
+
+User = get_user_model()
 
 
 class Group(models.Model):
@@ -46,10 +47,10 @@ class Post(models.Model):
     )
 
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.text
+        return self.text[:15]
 
 
 class Comment(models.Model):
@@ -59,13 +60,13 @@ class Comment(models.Model):
         null=True,
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name='comments'
+        verbose_name='Комментармй'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name='comments',
+        verbose_name='Автор',
     )
     text = models.TextField(
         'Текст комментария',
@@ -96,3 +97,22 @@ class Follow(models.Model):
         verbose_name='Автор',
         related_name='following'
     )
+
+    def __str__(self):
+        return (
+            f'Пользователь {self.user} подписан на {self.author}'
+        )
+
+    def clean(self):
+        if self.user == self.author:
+            raise ValidationError('нельзя подписаться на себя')
+
+    class Meta:
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики'
+        constraints = (
+            models.UniqueConstraint(
+                fields=('user', 'author'),
+                name='user_author_constraint'
+            ),
+        )

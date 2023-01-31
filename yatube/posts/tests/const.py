@@ -1,7 +1,8 @@
+import tempfile
+
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from django.conf import settings
-import tempfile
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
@@ -14,7 +15,7 @@ TOTAL_POSTS = 13
 NAME_GIF = 'small.gif'
 USERNAME = 'User_test'
 OTHER_USER = 'other_user'
-TEXT = 'text_test'
+TEXT = 'ordinary_text_for_test'
 GROUP1_SLUG = 'slug_test'
 GROUP1_TITLE = "Title"
 GROUP1_DESCRIPTION = "descr_test"
@@ -43,6 +44,8 @@ TEMPLATE_PROFILE_REV = 'posts/profile.html'
 TEMPLATE_POST_DETAIL = 'posts/post_detail.html'
 TEMPLATE_POST_EDIT = 'posts/create_post.html'
 TEMPLATE_CORE_404 = 'core/404.html'
+TEMPLATE_TECH = 'about/tech.html'
+TEMPLATE_AUTHOR = 'about/author.html'
 
 URL_INDEX_HOME = '/'
 URL_ADD_COMMENT = 'posts:add_comment'
@@ -53,6 +56,8 @@ URL_POST_EDIT = 'posts:post_edit'
 URL_UNEXISTRING = '/unexisting_page/'
 URL_POST_DETAIL = 'posts:post_detail'
 URL_GROUP_LIST = 'posts:group_list'
+URL_AUTHOR = reverse('about:author')
+URL_TECH = reverse('about:tech')
 URL_INDEX_REV = reverse(URL_INDEX)
 URL_FOLLOW = reverse('posts:follow_index')
 URL_PROFILE_REV = reverse(URL_PROFILE, kwargs={'username': USERNAME})

@@ -4,8 +4,8 @@ from django.core.cache import cache
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
+from posts.models import Follow, Group, Post, User
 from posts.tests import const
-from posts.models import Group, Post, Follow, User
 
 
 @override_settings(MEDIA_ROOT=const.TEMP_MEDIA_ROOT)
@@ -47,6 +47,9 @@ class PostsViewsTests(TestCase):
             const.URL_GROUP_LIST,
             kwargs={'slug': cls.group2.slug}
         )
+        cls.ADD_COMMENT = reverse(
+            const.URL_ADD_COMMENT,
+            kwargs={'post_id': cls.post.pk})
 
     @classmethod
     def tearDownClass(cls):
@@ -80,12 +83,18 @@ class PostsViewsTests(TestCase):
             self.POST_DETAIL: const.TEMPLATE_POST_DETAIL,
             self.POST_EDIT: const.TEMPLATE_POST_EDIT,
             const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
-            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404
-
+            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404,
+            self.ADD_COMMENT: const.TEMPLATE_POST_DETAIL,
+            const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
+            const.URL_AUTHOR: const.TEMPLATE_AUTHOR,
+            const.URL_TECH: const.TEMPLATE_TECH,
         }
         for reverse_name, template in templates_pages_names.items():
-            with self.subTest(template=template):
-                response = self.authorized_client.get(reverse_name)
+            with self.subTest(reverse_name=reverse_name):
+                response = self.authorized_client.get(
+                    reverse_name,
+                    follow=True
+                )
                 self.assertTemplateUsed(response, template)
 
     def test_profile_page_shows_correct_context(self):

@@ -1,15 +1,13 @@
 import shutil
-
+from http import HTTPStatus
 from unittest import TestCase
 
-from http import HTTPStatus
-
+from django import forms
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
-from django import forms
 
 from posts.forms import PostForm
-from posts.models import Group, Post, User, Comment
+from posts.models import Comment, Group, Post, User
 from posts.tests import const
 
 
