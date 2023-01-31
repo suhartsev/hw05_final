@@ -8,7 +8,7 @@
   {% load cache %}
   {% cache 20 page_obj %}
     {% for post in page_obj %}
-    {% include 'includes/posts.html' %}
+    {% include 'includes/post_s.html' %}
     {% endfor %}
   {% endcache %}
   {% include 'posts/includes/paginator.html' %}

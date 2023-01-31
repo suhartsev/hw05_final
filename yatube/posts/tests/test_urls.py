@@ -75,7 +75,8 @@ class PostURLTests(TestCase):
         ),
             (
             const.URL_POST_CREATE_REV,
-            HTTPStatus.OK, HTTPStatus.OK,
+            HTTPStatus.OK,
+            HTTPStatus.OK,
             HTTPStatus.FOUND
         ),
             (
@@ -97,17 +98,10 @@ class PostURLTests(TestCase):
             HTTPStatus.FOUND
         )]
         for urls, auth_cond, other_cond, guest_cond in url_code:
-            for client, cond in [(
-                self.author,
-                auth_cond
-            ),
-                (
-                self.other,
-                other_cond
-            ),
-                (
-                self.guest,
-                guest_cond
-            )]:
+            for client, cond in [
+                (self.author, auth_cond),
+                (self.other, other_cond),
+                (self.guest, guest_cond),
+            ]:
                 with self.subTest(urls=urls):
                     self.assertEqual(client.get(urls).status_code, cond)

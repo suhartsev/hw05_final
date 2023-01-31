@@ -49,7 +49,7 @@ class PostsViewsTests(TestCase):
         )
         cls.ADD_COMMENT = reverse(
             const.URL_ADD_COMMENT,
-            kwargs={'post_id': cls.post.pk})
+            kwargs={'post_id': cls.post.id})
 
     @classmethod
     def tearDownClass(cls):
