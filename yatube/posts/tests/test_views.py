@@ -83,11 +83,10 @@ class PostsViewsTests(TestCase):
             self.POST_DETAIL: const.TEMPLATE_POST_DETAIL,
             self.POST_EDIT: const.TEMPLATE_POST_EDIT,
             const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
-            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404,
             self.ADD_COMMENT: const.TEMPLATE_POST_DETAIL,
-            const.URL_FOLLOW: const.TEMPLATE_FOLLOW,
             const.URL_AUTHOR: const.TEMPLATE_AUTHOR,
             const.URL_TECH: const.TEMPLATE_TECH,
+            const.URL_UNEXISTRING: const.TEMPLATE_CORE_404
         }
         for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
