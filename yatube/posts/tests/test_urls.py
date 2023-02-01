@@ -49,54 +49,56 @@ class PostURLTests(TestCase):
 
     def test_urls_exists_at_desired_location_client(self):
         """Проверка: доступа страниц для Автор, Гость, Пользователь"""
-        url_code = [(
-            const.URL_INDEX_HOME,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.OK
-        ),
+        url_code = [
             (
-            self.GROUP_LIST,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.OK
-        ),
+                const.URL_INDEX_HOME,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.OK
+            ),
             (
-            const.URL_PROFILE_REV,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.OK
-        ),
+                self.GROUP_LIST,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.OK
+            ),
             (
-            self.POST_DETAIL,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.OK
-        ),
+                const.URL_PROFILE_REV,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.OK
+            ),
             (
-            const.URL_POST_CREATE_REV,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.FOUND
-        ),
+                self.POST_DETAIL,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.OK
+            ),
             (
-            self.POST_EDIT,
-            HTTPStatus.OK,
-            HTTPStatus.FOUND,
-            HTTPStatus.FOUND
-        ),
+                const.URL_POST_CREATE_REV,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.FOUND
+            ),
             (
-            const.URL_UNEXISTRING,
-            HTTPStatus.NOT_FOUND,
-            HTTPStatus.NOT_FOUND,
-            HTTPStatus.NOT_FOUND
-        ),
+                self.POST_EDIT,
+                HTTPStatus.OK,
+                HTTPStatus.FOUND,
+                HTTPStatus.FOUND
+            ),
             (
-            const.URL_FOLLOW,
-            HTTPStatus.OK,
-            HTTPStatus.OK,
-            HTTPStatus.FOUND
-        )]
+                const.URL_UNEXISTRING,
+                HTTPStatus.NOT_FOUND,
+                HTTPStatus.NOT_FOUND,
+                HTTPStatus.NOT_FOUND
+            ),
+            (
+                const.URL_FOLLOW,
+                HTTPStatus.OK,
+                HTTPStatus.OK,
+                HTTPStatus.FOUND
+            )
+        ]
         for urls, auth_cond, other_cond, guest_cond in url_code:
             for client, cond in [
                 (self.author, auth_cond),
