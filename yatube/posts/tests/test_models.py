@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from posts.models import Group, Post, User
+from posts.models import Group, Post, User, LONG_TEXT
 from posts.tests import const
 
 
@@ -22,7 +22,7 @@ class PostModelTest(TestCase):
     def test_models_have_correct_object_names(self):
         """Проверка: что у моделей корректно работает __str__, title"""
         fields_posts_group = {
-            self.post.text[:const.LONG_TEXT]: str(self.post),
+            self.post.text[:LONG_TEXT]: str(self.post),
             self.group.title: str(self.group)
         }
         for key, value in fields_posts_group.items():
