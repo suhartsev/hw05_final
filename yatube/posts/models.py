@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 MAX_LENGTH_TEXT = 200
+LONG_TEXT = 15
 
 User = get_user_model()
 
@@ -50,7 +51,7 @@ class Post(models.Model):
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:LONG_TEXT]
 
 
 class Comment(models.Model):
@@ -98,15 +99,6 @@ class Follow(models.Model):
         related_name='following'
     )
 
-    def __str__(self):
-        return (
-            f'Пользователь {self.user} подписан на {self.author}'
-        )
-
-    def clean(self):
-        if self.user == self.author:
-            raise ValidationError('нельзя подписаться на себя')
-
     class Meta:
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
@@ -116,3 +108,12 @@ class Follow(models.Model):
                 name='user_author_constraint'
             ),
         )
+
+    def __str__(self):
+        return (
+            f'Пользователь {self.user} подписан на {self.author}'
+        )
+
+    def clean(self):
+        if self.user == self.author:
+            raise ValidationError('нельзя подписаться на себя')
