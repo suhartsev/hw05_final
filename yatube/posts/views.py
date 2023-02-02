@@ -35,11 +35,12 @@ def profile(request, username):
     post_list = author.posts.all()
     page_obj = paginator_obj(request, post_list)
     following = (
-        request.user.is_authenticated != author
+        request.user.is_authenticated
+        and request.user != author
         and Follow.objects.filter(
             user=request.user,
             author=author
-        )
+        ).exists()
     )
     return render(
         request,
