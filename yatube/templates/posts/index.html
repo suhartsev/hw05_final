@@ -4,11 +4,11 @@
   Последние обновления на сайте
 {% endblock %}
 {% block content %}
-{% include 'posts/includes/switcher.html' with index=True %}
+  {% include 'posts/includes/switcher.html' with index=True %}
   {% load cache %}
-  {% cache 20 page_obj %}
+  {% cache 3 page_obj %}
     {% for post in page_obj %}
-    {% include 'includes/post_s.html' %}
+      {% include 'includes/post_s.html' %}
     {% endfor %}
   {% endcache %}
   {% include 'posts/includes/paginator.html' %}

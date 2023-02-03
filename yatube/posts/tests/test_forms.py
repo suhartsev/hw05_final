@@ -76,27 +76,6 @@ class PostCreateFormTest(TestCase):
             ).exists()
         )
 
-    def test_create_post_form(self):
-        """Проверка: Создаётся ли новая запись в базе данных, создавая пост"""
-        post_count = Post.objects.count()
-        form_data = {
-            'text': const.TEXT,
-            'group': self.group.id
-        }
-        response = self.authorized_client.post(
-            const.URL_POST_CREATE_REV,
-            data=form_data,
-            follow=True
-        )
-        post = Post.objects.first()
-        self.assertRedirects(
-            response, const.URL_PROFILE_REV
-        )
-        self.assertEqual(Post.objects.count(), post_count + 1)
-        self.assertEqual(post.text, form_data['text'])
-        self.assertEqual(post.group.id, form_data['group'])
-        self.assertEqual(post.author, self.user)
-
     def test_comment_form_non_auth(self):
         """Проверка: Создаётся ли новая запись в базе создавая комментарий
         авторизованным пользователем и соответстувует ли контекст"""

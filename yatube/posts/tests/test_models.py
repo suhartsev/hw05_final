@@ -1,7 +1,8 @@
 from django.test import TestCase
 
-from posts.models import Group, Post, User, LONG_TEXT
+from posts.models import Group, Post, User
 from posts.tests import const
+from posts.models import LONG_TEXT
 
 
 class PostModelTest(TestCase):

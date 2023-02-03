@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
 {% block title %} Профайл пользователя {{ author.get_full_name }}{% endblock %}
-{% block content %}   
+{% block content %}
   <div class="mb-5">
     <h1>Все посты пользователя {{ author.get_full_name }} </h1>
     <h3>Всего постов: {{ author.posts.count }} </h3>
+    <h6>Всего подписчиков: {{ author.following.count }} </h6>
     {% if user.id != author.id %}
       {% if following %}
         <a
@@ -14,17 +15,17 @@
           Отписаться
         </a>
       {% else %}
-          <a
-            class="btn btn-lg btn-primary"
-            href="{% url 'posts:profile_follow' author.username %}" role="button"
-          >
-            Подписаться
-          </a>
+        <a
+          class="btn btn-lg btn-primary"
+          href="{% url 'posts:profile_follow' author.username %}" role="button"
+        >
+          Подписаться
+        </a>
       {% endif %}
     {% endif %}
   </div>
   {% for post in page_obj %}
-  {% include 'includes/post_s.html' with non_author=True %}
+    {% include 'includes/post_s.html' with non_author=True %}
   {% endfor %}
   {% include 'posts/includes/paginator.html' %}
 {% endblock %}

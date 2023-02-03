@@ -8,7 +8,7 @@ from .models import Group, Post, User, Follow
 from .utils import paginator_obj
 
 
-@cache_page(settings.CACHE_TIME)
+@cache_page(settings.LIMIT_POSTS_THREE)
 def index(request):
     post_list = Post.objects.all()
     page_obj = paginator_obj(request, post_list)
@@ -151,3 +151,12 @@ def profile_unfollow(request, username):
         author=author
     ).delete()
     return redirect('posts:profile', username=author)
+
+
+@login_required
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user != post.author and request.method != 'POST':
+        return redirect('posts:post_detail', post_id)
+    post.delete()
+    return redirect('posts:index')

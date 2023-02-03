@@ -13,6 +13,7 @@ urlpatterns = [
     path('create/', views.post_create, name='post_create'),
     path('posts/<int:post_id>/edit/', views.post_edit, name='post_edit'),
     path('group/<slug:slug>/', views.group_posts, name='group_list'),
+    path('posts/<int:post_id>/delete/', views.post_delete, name='post_delete'),
     path('follow/', views.follow_index, name='follow_index'),
     path(
         'posts/<int:post_id>/comment/',
