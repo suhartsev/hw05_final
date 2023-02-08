@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from posts import views
+
+CACHE_SEC = 20
 
 app_name = 'posts'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', cache_page(CACHE_SEC)(views.index), name='index'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('posts/<int:post_id>/', views.post_detail, name='post_detail'),
     path('create/', views.post_create, name='post_create'),
@@ -19,6 +22,10 @@ urlpatterns = [
         'posts/<int:post_id>/comment/',
         views.add_comment,
         name='add_comment'
+    ),
+    path(
+        'posts/comments/<int:comment_id>/delete/',
+        views.comment_delete, name='delete_comment'
     ),
     path(
         'profile/<str:username>/follow/',

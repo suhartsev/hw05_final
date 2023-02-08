@@ -24,6 +24,11 @@
       {{ comment.created }}
       <p>
         {{ comment.text }}
+        {% if user == comment.author %}
+        <a href="{% url "posts:delete_comment" comment.id %}"><br>
+          <button class="btn btn-primary" onclick="return confirm('Вы уверен, что хотите удалить комментарий?');">Удалить комментарий</button>
+        </a>
+        {% endif %}
       </p>
     </div>
   </div>

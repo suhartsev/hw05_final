@@ -5,11 +5,11 @@
 {% endblock %}
 {% block content %}
   {% include 'posts/includes/switcher.html' with index=True %}
-  {% load cache %}
-  {% cache 20 index_page page_obj.number %}
+  {% comment %} {% load cache %}
+  {% cache 20 index_page page_obj.number %} {% endcomment %}
     {% for post in page_obj %}
       {% include 'includes/post_s.html' %}
     {% endfor %}
-  {% endcache %}
+  {% comment %} {% endcache %} {% endcomment %}
   {% include 'posts/includes/paginator.html' %}
 {% endblock %}

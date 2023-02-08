@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import PostForm, CommentForm
-from .models import Group, Post, User, Follow
+from .models import Group, Post, User, Follow, Comment
 from .utils import paginator_obj
 
 
@@ -157,3 +157,11 @@ def post_delete(request, post_id):
         return redirect('posts:post_detail', post_id)
     post.delete()
     return redirect('posts:index')
+
+
+@login_required
+def comment_delete(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if comment.author == request.user:
+        comment.delete()
+    return redirect('posts:post_detail', post_id=comment.post.pk)
