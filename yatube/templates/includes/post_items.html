@@ -33,8 +33,8 @@
 </article>
 {% if post.group and not non_group %}
   <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы: {{ post.group.title }}</a><br>
-{% endif %}<br>
-{% if user == post.author %}
+{% endif %}
+{% if user == post.author %}<br>
   <form action="{% url "posts:post_delete" post.id %}" method="post">
     {% csrf_token %}
     <button class="btn btn-primary" onclick="return confirm('Вы уверен, что хотите удалить пост?');">Удалить пост</button>

@@ -6,7 +6,7 @@
   <div class="container py-5">
     <h1>Посты авторов, на которых вы подписаны</h1>
     {% for post in page_obj %}
-      {% include 'includes/post_s.html' %}
+      {% include 'includes/post_items.html' %}
     {% endfor %}
     {% include 'posts/includes/paginator.html' %}
   </div>
