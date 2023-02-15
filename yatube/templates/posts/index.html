@@ -7,9 +7,9 @@
   {% include 'posts/includes/switcher.html' with index=True %}
   {% comment %} {% load cache %}
   {% cache 20 index_page page_obj.number %} {% endcomment %}
-    {% for post in page_obj %}
-      {% include 'includes/post_s.html' %}
-    {% endfor %}
+  {% for post in page_obj %}
+    {% include 'includes/post_items.html' %}
+  {% endfor %}
   {% comment %} {% endcache %} {% endcomment %}
   {% include 'posts/includes/paginator.html' %}
 {% endblock %}

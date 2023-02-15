@@ -23,6 +23,7 @@ GROUP1_DESCRIPTION = "descr_test"
 GROUP2_TITLE = "Title2"
 GROUP2_SLUG = "slug_test2"
 GROUP2_DESCRIPTION = "descr_test2"
+FOLLOW_STR = f'Пользователь {USERNAME} подписан на {OTHER_USER}'
 SMALL_GIF = (
     b'\x47\x49\x46\x38\x39\x61\x02\x00'
     b'\x01\x00\x80\x00\x00\x00\x00\x00'
